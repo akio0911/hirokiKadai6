@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var randomNum: Int = 1
+    @State private var randomNum: Int = Int.random(in: 1...100)
     @State private var sliderNum: Double = 1.0
     @State private var judgeAlert: Bool = false
     @State private var alertMessage: String = ""
