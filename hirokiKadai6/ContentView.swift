@@ -33,7 +33,7 @@ struct ContentView: View {
             }
             
             Button(action: {
-                alertMessage = numJudge()
+                alertMessage = makeResultMessage()
                 judgeAlert = true
                 randomNum = Int.random(in: Self.range)
             }) { Text("判定！") }
@@ -41,7 +41,7 @@ struct ContentView: View {
         }
     }
     
-    private func numJudge() -> String {
+    private func makeResultMessage() -> String {
         let firstLine = randomNum == Int(sliderNum) ? "あたり！" : "はずれ！"
         return "\(firstLine)\n" + "あなたの値: \(Int(sliderNum))"
     }
