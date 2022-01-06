@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var randomNum: Int = Int.random(in: 1...100)
+    private static let range = 1...100
+    @State private var randomNum: Int = Int.random(in: Self.range)
     @State private var sliderNum: Double = 1.0
     @State private var judgeAlert: Bool = false
     @State private var alertMessage: String = ""
@@ -18,8 +19,7 @@ struct ContentView: View {
             Text("\(randomNum)")
                 .font(.largeTitle)
                 .padding()
-            
-            Slider(value: $sliderNum, in: 1...100)
+            Slider(value: $sliderNum, in: Double(Self.range.lowerBound)...Double(Self.range.upperBound))
                 .padding(.horizontal)
 
             HStack {
@@ -33,20 +33,17 @@ struct ContentView: View {
             }
             
             Button(action: {
-                numJudge()
+                alertMessage = numJudge()
                 judgeAlert = true
-                randomNum = Int.random(in: 1...100)
+                randomNum = Int.random(in: Self.range)
             }) { Text("判定！") }
             .alert("結果", isPresented: $judgeAlert, actions: {}, message: {Text(alertMessage)})
         }
     }
     
-    private func numJudge() {
-        if randomNum == Int(sliderNum) {
-            alertMessage = "あたり！\n" + "あなたの値: \(Int(sliderNum))"
-        } else {
-            alertMessage = "はずれ！\n" + "あなたの値: \(Int(sliderNum))"
-        }
+    private func numJudge() -> String {
+        let firstLine = randomNum == Int(sliderNum) ? "あたり！" : "はずれ！"
+        return "\(firstLine)\n" + "あなたの値: \(Int(sliderNum))"
     }
 }
 
